@@ -1,16 +1,28 @@
 addEventListener("keydown", keyDown);
 
+/**
+ * Обработка события ввода с клавиатуры
+ */
 function keyDown(e) {
   clickHandler(e.key);
 }
 
+/**
+ * Выражение, вводимое пользователем, во внутреннем представлении
+ */
 var displayValue = "";
 
-function AddElem() {
+/**
+ * Добавление значения нажатой кнопки интерфейса
+ */
+function addValue() {
   clickHandler(event.currentTarget.innerText);
 }
 
-function GetResult() {
+/**
+ * Вычисление результата введенного пользователем выражения
+ */
+function getResult() {
   var disp = document.getElementById("display");
 
   try {
@@ -28,6 +40,10 @@ function GetResult() {
   displayValue = "";
 }
 
+/**
+ * Обработка событий нажатия кнопки
+ * @param {string} button Значение нажатой кнопки
+ */
 function clickHandler(button) {
   var disp = document.getElementById("display");
   disp.style.color = "black";
@@ -56,13 +72,17 @@ function clickHandler(button) {
       break;
 
     case (button == "Enter" || button == "="):
-      GetResult();
+      getResult();
       return;
   }
 
   disp.innerText = displayValue;
 }
 
+/**
+ * Определение является ли входящая строка операцией выражения
+ * @param {string} op Определяемая строка
+ */
 function isOperation(op) {
   switch(op) {
     case "(": case ")": case "%": case "*":case "/": case "+": case "-":
@@ -73,9 +93,13 @@ function isOperation(op) {
   }
 }
 
+/**
+ * Определение является ли входящая строка сообщением исключения
+ * @param {string} text Определяемая строка
+ */
 function isException(text) {
   switch(text) {
-    case "Infinity": case "NaN": case "Null":
+    case "Infinity": case "NaN": case "null":
       return true;
 
     default:

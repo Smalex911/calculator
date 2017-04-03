@@ -2,6 +2,10 @@ var position;
 var Operands;
 var Functions;
 
+/**
+ * Вычисляет значение выражения
+ * @param {string} str Строка выражения
+ */
 function calculating(str) {
   str = '(' + str + ')';
   str = addMissingBracket(str);
@@ -44,6 +48,10 @@ function calculating(str) {
   return Operands[0];
 }
 
+/**
+ * Определяет недостающие скобки в выражении
+ * @param {string} str Строка выражения
+ */
 function addMissingBracket(str) {
   var value = String(str);
 
@@ -69,6 +77,11 @@ function addMissingBracket(str) {
   }
 }
 
+/**
+ * Определяет место пропущенного знака перед открывающей скобкой
+ * @param {string} value Строка выражения
+ * @param {number} ind Индекс позиции в строке
+ */
 function isLeftBracket(value, ind){
   if (value[ind] == "(" && value[ind - 1] >= 0) {
     return true;
@@ -77,6 +90,11 @@ function isLeftBracket(value, ind){
   return false;
 }
 
+/**
+ * Определяет место пропущенного знака после закрывающей скобки
+ * @param {string} value Строка выражения
+ * @param {number} ind Индекс позиции в строке
+ */
 function isRightBracket(value, ind){
   if (value[ind - 1] == ")" && value[ind] >= 0) {
     return true;
@@ -85,6 +103,9 @@ function isRightBracket(value, ind){
   return false;
 }
 
+/**
+ * Вычисляет значение по определенной операции
+ */
 function popFunction(){
   var B = Operands.pop();
   var A = Operands.pop();
@@ -119,6 +140,10 @@ function popFunction(){
   }
 }
 
+/**
+ * Определение порядка вычисления по приоритету операций
+ * @param {string} op Операция в выражении
+ */
 function canPop(op){
   if (Functions.length == 0) {
     return false;
@@ -130,6 +155,10 @@ function canPop(op){
   return p1 >= 0 && p2 >= 0 && p1 >= p2;
 }
 
+/**
+ * Возвращает приоритет операции
+ * @param {string} op Операция в выражении
+ */
 function getPriority(op){
   switch (op) {
       case '(':
@@ -143,6 +172,10 @@ function getPriority(op){
     }
 }
 
+/**
+ * Возвращает токен строки по позиции
+ * @param {string} s Строка выражения
+ */
 function getToken(s){
   readWhiteSpace(s);
 
@@ -157,10 +190,18 @@ function getToken(s){
   return readFunction(s);
 }
 
+/**
+ * Чтение операции в строке
+ * @param {string} s Строка выражения
+ */
 function readFunction(s){
   return s[position++];
 }
 
+/**
+ * Чтение числа в строке
+ * @param {string} s Строка выражения
+ */
 function readDouble(s){
   var res = "";
   while (position < s.length && (s[position] >= 0 || s[position] == '.')) {
@@ -170,6 +211,10 @@ function readDouble(s){
   return res;
 }
 
+/**
+ * Чтение пустых символов в строке
+ * @param {string} s Строка выражения
+ */
 function readWhiteSpace(s){
   while(position < s.length && s[position] == ' ') {
     position++;
