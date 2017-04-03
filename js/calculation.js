@@ -2,12 +2,11 @@ var position;
 var Operands;
 var Functions;
 
-function calculating(str){
+function calculating(str) {
   str = '(' + str + ')';
   str = addMissingBracket(str);
 
-  if (str == "")
-    return;
+  if (str == "") return;
   
   position = 0;
   Operands = new Array();
@@ -17,20 +16,24 @@ function calculating(str){
 
   do {
     token = getToken(str);
-    if (!(token >= 0) && !(prevToken >= 0) && prevToken == '(' && (token == '+' || token == '-'))
+
+    if (prevToken == '(' && (token == '+' || token == '-')) {
       Operands.push(0);
+    }
 
     if (token >= 0) {
       Operands.push(token);
     } else if (!(token >= 0)) {
       if (token == ')') {
-        while (Functions.length > 0 && Functions[Functions.length-1] != '(')
-          popFunction(Operands, Functions);
+        while (Functions.length > 0 && Functions[Functions.length-1] != '(') {
+          popFunction();
+        }
           
         Functions.pop();
       } else {
-        while (canPop(token, Functions))
-          popFunction(Operands, Functions);
+        while ( canPop(token) ) {
+          popFunction();
+        }
 
         Functions.push(token);
       }
@@ -41,45 +44,53 @@ function calculating(str){
   return Operands[0];
 }
 
-function addMissingBracket(str){
+function addMissingBracket(str) {
   var value = String(str);
 
   var countOpenBracket = value.match(/[(]/g).length
   var countCloseBracket = value.match(/[)]/g).length
 
-  for(i = 1; i < value.length-1; i++)
-  {
-    if (value[i] == "(" && value[i-1] >= 0)
-    {
-      var temp1 = value.substring(0, i);
-      var temp2 = value.substring(i);
-      value = temp1 + "*" + temp2;
-    } else if (value[i-1] == ")" && value[i] >= 0)
-      {
-        var temp1 = value.substring(0, i);
-        var temp2 = value.substring(i);
-        value = temp1 + "*" + temp2;
-      }
+  for(i = 1; i < value.length - 1; i++) {
+    if (isLeftBracket(value, i) || isRightBracket(value, i)) {
+      value = value.substring(0, i) + "*" + value.substring(i);
+    }
   }
 
-  if (countCloseBracket > countOpenBracket){
+  if (countCloseBracket > countOpenBracket) {
     alert("Пропущены открывающие скобки, пожалуста добавьте недостающие");
+
     return "";
-  } else{
-    for(i = 0; i < countOpenBracket - countCloseBracket; i++)
+  } else {
+    for(i = 0; i < countOpenBracket - countCloseBracket; i++) {
       value += ")";
+    }
+
     return value;
   }
+}
+
+function isLeftBracket(value, ind){
+  if (value[ind] == "(" && value[ind - 1] >= 0) {
+    return true;
+  }
+  
+  return false;
+}
+
+function isRightBracket(value, ind){
+  if (value[ind - 1] == ")" && value[ind] >= 0) {
+    return true;
+  }
+  
+  return false;
 }
 
 function popFunction(){
   var B = Operands.pop();
   var A = Operands.pop();
 
-  if (A != Number(A).toString() || B != Number(B).toString())
-  {
-    switch (Functions.pop())
-    {
+  if (A != Number(A).toString() || B != Number(B).toString()) {
+    switch ( Functions.pop() ) {
       case '+': Operands.push(bigint_plus(A, B).toString());
         break;
       case '-': Operands.push(bigint_minus(A, B).toString());
@@ -92,35 +103,35 @@ function popFunction(){
         break;
     }
 
-  } else{
-    switch (Functions.pop())
-    {
-      case '+': Operands.push((Number(A) + Number(B)).toFixed(10)*1);
+  } else {
+    switch ( Functions.pop() ) {
+      case '+': Operands.push((Number(A) + Number(B)).toFixed(10) * 1);
         break;
-      case '-': Operands.push((Number(A) - Number(B)).toFixed(10)*1);
+      case '-': Operands.push((Number(A) - Number(B)).toFixed(10) * 1);
         break;
-      case '*': Operands.push((Number(A) * Number(B)).toFixed(10)*1);
+      case '*': Operands.push((Number(A) * Number(B)).toFixed(10) * 1);
         break;
-      case '/': Operands.push((Number(A) / Number(B)).toFixed(10)*1);
+      case '/': Operands.push((Number(A) / Number(B)).toFixed(10) * 1);
         break;
-      case '%': Operands.push((Number(A) % Number(B)).toFixed(10)*1);
+      case '%': Operands.push((Number(A) % Number(B)).toFixed(10) * 1);
         break;
     }
   }
 }
 
-function canPop(op1){
-  if (Functions.length == 0)
+function canPop(op){
+  if (Functions.length == 0) {
     return false;
-  var p1 = getPriority(op1);
-  var p2 = getPriority(Functions[Functions.length-1]);
+  }
+  
+  var p1 = getPriority(op);
+  var p2 = getPriority( Functions[Functions.length - 1] );
 
   return p1 >= 0 && p2 >= 0 && p1 >= p2;
 }
 
 function getPriority(op){
-  switch (op)
-    {
+  switch (op) {
       case '(':
         return -1;
       case '*': case '/': case '%':
@@ -135,27 +146,32 @@ function getPriority(op){
 function getToken(s){
   readWhiteSpace(s);
 
-  if (position == s.length)
-      return null;
-  if (s[position] >= 0)
+  if (position == s.length) {
+    return null;
+  }
+
+  if (s[position] >= 0) {
     return readDouble(s);
-  else
-    return readFunction(s);
+  }
+
+  return readFunction(s);
 }
 
 function readFunction(s){
-  return s[position++]
+  return s[position++];
 }
 
 function readDouble(s){
   var res = "";
-    while (position < s.length && (s[position] >= 0 || s[position] == '.'))
-        res += s[position++];
+  while (position < s.length && (s[position] >= 0 || s[position] == '.')) {
+      res += s[position++];
+  }
 
-    return res;
+  return res;
 }
 
 function readWhiteSpace(s){
-  while(position < s.length && s[position] == ' ')
+  while(position < s.length && s[position] == ' ') {
     position++;
+  }
 }

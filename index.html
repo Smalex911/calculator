@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
-	<meta charset="utf-8">
-    <title> Calculator </title>
+	<head>
+		<meta charset="utf-8">
+		<title> Calculator </title>
     <link rel="stylesheet" href="css/styles.css">
-  </head>
-<body>
-<div class="calculator">
-		<form class="calculator_form">
-				<div class="calculator_row">
-						<div class="calculator_display" id="display" type="text"></div>
+	</head>
+	<body>
+		<div class="calculator">
+			<form class="calc_form">
+				<div class="calc_row">
+					<div type="text" class="calc_display" id="display"></div>
 				</div>
-				<div class="calculator_row">
-						<button type="button" class="calculator_key calculator_clear" onclick="AddElem()">(</button>
-						<button type="button" class="calculator_key calculator_backspace" onclick="AddElem()">)</button>
-						<button type="button" class="calculator_key calculator_power" onclick="AddElem()">%</button>
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">*</button>
+				<div class="calc_row">
+					<button type="button" class="calc_key" onclick="AddElem()">(</button>
+					<button type="button" class="calc_key" onclick="AddElem()">)</button>
+					<button type="button" class="calc_key" onclick="AddElem()">%</button>
+					<button type="button" class="calc_key" onclick="AddElem()">*</button>
 				</div>
-				<div class="calculator_row">
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">7</button>
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">8</button>
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">9</button>
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">/</button>
+				<div class="calc_row">
+					<button type="button" class="calc_key" onclick="AddElem()">7</button>
+					<button type="button" class="calc_key" onclick="AddElem()">8</button>
+					<button type="button" class="calc_key" onclick="AddElem()">9</button>
+					<button type="button" class="calc_key" onclick="AddElem()">/</button>
 				</div>
-				<div class="calculator_row">
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">4</button>
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">5</button>
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">6</button>
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">+</button>
+				<div class="calc_row">
+					<button type="button" class="calc_key" onclick="AddElem()">4</button>
+					<button type="button" class="calc_key" onclick="AddElem()">5</button>
+					<button type="button" class="calc_key" onclick="AddElem()">6</button>
+					<button type="button" class="calc_key" onclick="AddElem()">+</button>
 				</div>
-				<div class="calculator_row">
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">1</button>
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">2</button>
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">3</button>
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">-</button>
+				<div class="calc_row">
+					<button type="button" class="calc_key" onclick="AddElem()">1</button>
+					<button type="button" class="calc_key" onclick="AddElem()">2</button>
+					<button type="button" class="calc_key" onclick="AddElem()">3</button>
+					<button type="button" class="calc_key" onclick="AddElem()">-</button>
 				</div>
-				<div class="calculator_row">
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">0</button>
-						<button type="button" class="calculator_key calculator_button" onclick="AddElem()">.</button>
-            <button type="button" class="calculator_key calculator_button" onclick="AddElem()">CE</button>
-						<button type="button" class="calculator_key calculator_key_equal" onclick="GetResult()">=</button>
+				<div class="calc_row">
+					<button type="button" class="calc_key" onclick="AddElem()">0</button>
+					<button type="button" class="calc_key" onclick="AddElem()">.</button>
+					<button type="button" class="calc_key" onclick="AddElem()">CE</button>
+					<button type="button" class="calc_key calc_key_equal" onclick="GetResult()">=</button>
 				</div>
-		</form>
-</div>
-	<script src="js/index.js"></script>
-	<script src="js/calculation.js"></script>
-	<script src="js/BigInt.js"></script>
+			</form>
+		</div>
+		<script src="js/index.js"></script>
+		<script src="js/calculation.js"></script>
+		<script src="js/BigInt.js"></script>
   </body>
 </html>
