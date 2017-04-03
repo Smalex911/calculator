@@ -83,7 +83,7 @@ function addMissingBracket(str) {
  * @param {number} ind Индекс позиции в строке
  */
 function isLeftBracket(value, ind){
-  if (value[ind] == "(" && value[ind - 1] >= 0) {
+  if (value[ind] == "(" && (value[ind - 1] >= 0 || value[ind - 1] == ")")) {
     return true;
   }
   
